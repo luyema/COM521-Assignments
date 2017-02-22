@@ -46,15 +46,18 @@ stargazer(f3, type = "text")
 #PC7. Load up the dataset once again and fit the following linear models and be ready to interpret them similar to the way you did above in PC4:#
 pc7.df<-readstata13::read.dta13("Halloween2012-2014-2015_PLOS.dta")
 #(a)#
+table (complete.cases(pc7.df))
 f4<-lm(pc7.df$fruit~pc7.df$obama,data = pc7.df)
 summary(f4)
+mean(pc7.df$fruit,na.rm = TRUE)
 #(b)#
-
+f5<-lm(formula = pc7.df$fruit~pc7.df$obama+pc7.df$age+as.factor(pc7.df$treat_year),data = pc7.df)
+summary(f5)
+hist(residuals(f5))
 #PC8. Take a look at the residuals for your model in (a) and try to interpret these as you would in PC4 above. What do you notice?#
 residuals(f4)
 hist(f4)
 #PC9. Run the simple model in (a) three times on three subsets of the dataset: just 2012, 2014, and 2015. Be ready to talk through the results.#
-
-
-
-
+summary(lm(pc7.df$fruit~pc7.df$obama,data = pc7.df[pc7.df$treat_year == 2012]))
+summary(lm(pc7.df$fruit~pc7.df$obama,data = pc7.df[pc7.df$treat_year == 2014]))
+summary(lm(pc7.df$fruit~pc7.df$obama,data = pc7.df[pc7.df$treat_year == 2015]))
